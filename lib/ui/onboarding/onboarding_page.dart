@@ -17,6 +17,8 @@ class OnboardingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -27,30 +29,38 @@ class OnboardingPage extends StatelessWidget {
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 28.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 20.0),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+            AnimatedSwitcher(
+              duration: Duration(seconds: 1),
               child: Text(
-                description,
-                textAlign: TextAlign.center,
+                title,
+                key: ValueKey(title),
                 style: TextStyle(
-                  fontSize: 16.0,
+                  fontSize: screenSize.width * 0.07,
+                  fontWeight: FontWeight.bold,
                   color: Colors.white,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            SizedBox(height: screenSize.height * 0.02),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.1),
+              child: AnimatedSwitcher(
+                duration: Duration(seconds: 1),
+                child: Text(
+                  description,
+                  key: ValueKey(description),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: screenSize.width * 0.04,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
             if (isLastPage)
               Padding(
-                padding: const EdgeInsets.only(top: 30.0),
+                padding: EdgeInsets.only(top: screenSize.height * 0.03),
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.pushReplacement(
@@ -61,7 +71,7 @@ class OnboardingPage extends StatelessWidget {
                   child: Text('Get Started'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blueAccent,
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                    padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.1, vertical: screenSize.height * 0.02),
                   ),
                 ),
               ),

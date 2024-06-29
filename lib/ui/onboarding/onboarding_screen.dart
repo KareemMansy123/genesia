@@ -5,17 +5,17 @@ import 'onboarding_page.dart';
 
 class OnboardingScreen extends StatelessWidget {
   final List<OnboardingPage> onboardingPages = [
-    OnboardingPage(
+     OnboardingPage(
       image: 'assets/images/onboarding1.jpg',
       title: 'Welcome to Genesia',
       description: 'Discover a new way to interact with AI characters.',
     ),
-    OnboardingPage(
+     OnboardingPage(
       image: 'assets/images/onboarding2.jpg',
       title: 'Choose Your Character',
       description: 'Select a character to begin your journey.',
     ),
-    OnboardingPage(
+     OnboardingPage(
       image: 'assets/images/onboarding3.jpg',
       title: 'Engage and Enjoy',
       description: 'Chat and enjoy the experience.',
@@ -31,8 +31,8 @@ class OnboardingScreen extends StatelessWidget {
           return onboardingPages[index];
         },
         itemCount: onboardingPages.length,
-        pagination: SwiperPagination(),
-        control: SwiperControl(),
+        pagination: const SwiperPagination(),
+        control: const SwiperControl(),
         loop: false,
       ),
     );

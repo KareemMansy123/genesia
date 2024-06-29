@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vibration/vibration.dart';
 
 import '../home/home_screen.dart';
 
@@ -10,34 +11,38 @@ class CharacterSelectionScreen extends StatelessWidget {
     {'name': 'Character 4', 'image': 'assets/images/character4.jpg'},
   ];
 
+  void _onCharacterTap(BuildContext context, Map<String, String> character) {
+    if (Vibration.hasVibrator() != null) {
+      Vibration.vibrate(duration: 50);
+    }
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HomeScreen(character: character),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Select Your Character'),
         backgroundColor: Colors.blueAccent,
       ),
       body: GridView.builder(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(screenSize.width * 0.02),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
+          crossAxisCount: screenSize.width > 600 ? 4 : 2,
+          crossAxisSpacing: screenSize.width * 0.02,
+          mainAxisSpacing: screenSize.height * 0.02,
         ),
         itemCount: characters.length,
         itemBuilder: (context, index) {
           return GestureDetector(
-            onTap: () {
-              // Navigate to the main app screen with the selected character
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => HomeScreen(
-                    character: characters[index],
-                  ),
-                ),
-              );
-            },
+            onTap: () => _onCharacterTap(context, characters[index]),
             child: Card(
               elevation: 5,
               shape: RoundedRectangleBorder(
@@ -48,12 +53,12 @@ class CharacterSelectionScreen extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     backgroundImage: AssetImage(characters[index]['image']!),
-                    radius: 40,
+                    radius: screenSize.width * 0.1,
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: screenSize.height * 0.02),
                   Text(
                     characters[index]['name']!,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: screenSize.width * 0.05, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
